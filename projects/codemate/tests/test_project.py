@@ -49,3 +49,60 @@ def test_inspect_project_rejects_file(tmp_path: Path) -> None:
 
     with pytest.raises(NotADirectoryError):
         inspect_project(file_path)
+
+
+def test_inspect_project_ignores_generated_directories(
+    tmp_path: Path,
+) -> None:
+    """The inspector should ignore generated and environment directories."""
+
+    source = tmp_path / "src" / "main.py"
+    virtual_environment_file = (
+        tmp_path / ".venv" / "lib" / "package.py"
+    )
+    cache_file = tmp_path / "__pycache__" / "module.pyc"
+    git_metadata_file = tmp_path / ".git" / "config"
+
+    source.parent.mkdir(parents=True)
+    virtual_environment_file.parent.mkdir(parents=True)
+    cache_file.parent.mkdir(parents=True)
+    git_metadata_file.parent.mkdir(parents=True)
+
+    source.write_text("print('hello')\n", encoding="utf-8")
+    virtual_environment_file.write_text(
+        "generated\n",
+        encoding="utf-8",
+    )
+    cache_file.write_text("generated\n", encoding="utf-8")
+    git_metadata_file.write_text("generated\n", encoding="utf-8")
+
+    context = inspect_project(tmp_path)
+
+    paths = {project_file.path for project_file in context.files}
+
+    assert "src/main.py" in paths
+    assert ".venv/lib/package.py" not in paths
+    assert "__pycache__/module.pyc" not in paths
+    assert ".git/config" not in paths
+
+
+def test_inspect_project_ignores_egg_info(
+    tmp_path: Path,
+) -> None:
+    """The inspector should ignore Python package metadata directories."""
+
+    source = tmp_path / "src" / "main.py"
+    metadata_file = tmp_path / "codemate.egg-info" / "PKG-INFO"
+
+    source.parent.mkdir(parents=True)
+    metadata_file.parent.mkdir(parents=True)
+
+    source.write_text("print('hello')\n", encoding="utf-8")
+    metadata_file.write_text("metadata\n", encoding="utf-8")
+
+    context = inspect_project(tmp_path)
+
+    paths = {project_file.path for project_file in context.files}
+
+    assert "src/main.py" in paths
+    assert "codemate.egg-info/PKG-INFO" not in paths
