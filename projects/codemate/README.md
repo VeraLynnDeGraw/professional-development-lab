@@ -2,7 +2,7 @@
 
 A human-controlled AI developer assistant for understanding, planning, implementing, reviewing, testing, and documenting software changes.
 
-CODEMATE is being developed as part of the **Professional Development Lab**, a 23-day professional software engineering build focused on practical AI systems, reusable architecture, disciplined AI-assisted development, and human-controlled automation.
+CODEMATE is being developed as part of the **Professional Development Lab**, a professional software engineering portfolio focused on practical AI systems, reusable architecture, disciplined AI-assisted development, and human-controlled automation.
 
 ## Purpose
 
@@ -122,11 +122,11 @@ Future versions may provide controlled mechanisms for explicitly requesting norm
 
 ---
 
-# Current Version
+# Package Version
 
 `0.1.0a1`
 
-# Current Milestone
+# Current Release
 
 **v0.1-alpha.2 — CLI Inspection Interface**
 
@@ -221,4 +221,272 @@ CODEMATE reports:
 Total files: 7
 ```
 
-Generated environments and repository
+Generated environments and repository metadata are excluded from the default inspection.
+
+This self-inspection is an important validation step because CODEMATE is being tested against a real software project rather than only isolated test fixtures.
+
+---
+
+# Testing
+
+The Alpha.2 implementation currently has:
+
+```text
+9 tests
+9 passed
+```
+
+The tests cover:
+
+* project file discovery
+* project root resolution
+* missing project handling
+* invalid project path handling
+* generated directory exclusion
+* Python package metadata exclusion
+* successful CLI inspection
+* CLI handling of missing projects
+* CLI handling of invalid project paths
+
+Validation commands:
+
+```bash
+python -m pytest
+```
+
+```bash
+python -m compileall src
+```
+
+```bash
+git diff --check
+```
+
+Manual inspection:
+
+```bash
+codemate inspect .
+```
+
+---
+
+# Project Structure
+
+```text
+codemate/
+├── README.md
+├── pyproject.toml
+├── src/
+│   └── codemate/
+│       ├── __init__.py
+│       ├── cli.py
+│       └── project.py
+└── tests/
+    ├── test_cli.py
+    └── test_project.py
+```
+
+Development environments and generated artifacts are intentionally omitted from the documented source structure.
+
+---
+
+# Engineering Principles
+
+## Human-in-the-Loop
+
+CODEMATE proposes consequential actions rather than silently performing them.
+
+The developer maintains final authority.
+
+## Workspace Safety
+
+CODEMATE starts from a masked workspace rather than assuming every file should become AI context.
+
+## Transparency
+
+CODEMATE distinguishes observed information from inference, proposals, and unknowns.
+
+## Modularity
+
+Capabilities should remain separated into small, understandable, testable components.
+
+## Testability
+
+Implementation should be accompanied by explicit validation.
+
+## Local First
+
+The system prioritizes free and local execution before introducing paid services or external infrastructure.
+
+## Provider Independence
+
+Future AI functionality should be separated behind a provider boundary so that CODEMATE is not permanently coupled to one model or service.
+
+## Minimal Architecture
+
+CODEMATE should introduce complexity only when a real requirement justifies it.
+
+---
+
+# Development Workflow
+
+CODEMATE follows a deliberate engineering lifecycle:
+
+```text
+1. IDEA
+   ↓
+2. SPECIFICATION
+   ↓
+3. ARCHITECTURE
+   ↓
+4. AI IMPLEMENTATION
+   ↓
+5. HUMAN REVIEW
+   ↓
+6. TEST
+   ↓
+7. DOCUMENT
+   ↓
+8. COMMIT
+   ↓
+9. RELEASE
+   ↓
+10. ITERATE
+```
+
+The workflow is intentionally human-controlled.
+
+AI may assist with design, implementation, analysis, testing, and documentation, but consequential decisions remain subject to human review.
+
+---
+
+# Development Environment
+
+CODEMATE currently uses:
+
+* Python
+* Python standard library
+* pytest for testing
+* Git for version control
+* local virtual environments
+* local filesystem inspection
+
+The core application does not require a paid API.
+
+Future AI providers may include local models or optional external providers behind a replaceable interface.
+
+---
+
+# Planned Capabilities
+
+The broader CODEMATE architecture is intended to grow toward:
+
+```text
+PROJECT
+   ↓
+EXPLAIN
+   ↓
+PLAN
+   ↓
+IMPLEMENT
+   ↓
+REVIEW
+   ↓
+TEST
+   ↓
+DOCUMENT
+```
+
+Potential future capabilities include:
+
+* structured project context
+* code explanation
+* architecture explanation
+* implementation planning
+* reviewable file-change proposals
+* controlled file modification
+* test execution and interpretation
+* documentation assistance
+* configurable workspace policies
+* local AI providers
+* optional external AI providers
+
+These capabilities will be developed incrementally.
+
+They are not considered implemented merely because they appear in the roadmap.
+
+---
+
+# Safety Boundaries
+
+CODEMATE Alpha does not provide:
+
+* autonomous destructive actions
+* unrestricted shell execution
+* automatic GitHub publishing
+* arbitrary dependency installation
+* unsupervised file modification
+* automatic production changes
+
+Future capabilities that can modify the user's environment must provide an explicit human approval boundary.
+
+Consequential actions should communicate:
+
+```text
+WHAT
+WHY
+WHERE
+RISK
+```
+
+before approval.
+
+---
+
+# Alpha Development Philosophy
+
+CODEMATE is itself an experiment in disciplined AI-assisted software engineering.
+
+The project is intentionally being developed in small increments so that each milestone can be:
+
+1. understood
+2. implemented
+3. tested
+4. reviewed
+5. documented
+6. committed
+7. released
+
+The goal is not simply to create an AI coding tool.
+
+The goal is to create a developer assistant whose behavior, boundaries, evidence, and changes can be understood by the human using it.
+
+---
+
+# Current Status
+
+**v0.1-alpha.2**
+
+```text
+Project Inspection       ✓
+Workspace Masking       ✓
+CLI Inspection          ✓
+Evidence Reporting      ✓
+Automated Tests         ✓ 9/9
+Real Project Inspection ✓
+Documentation           ✓
+AI Provider             pending
+Code Explanation        pending
+Planning                pending
+Change Proposals        pending
+Human-Approved Editing  pending
+Test Assistance         pending
+```
+
+The next milestone will extend CODEMATE only after the current implementation has been reviewed, tested, documented, committed, and released.
+
+---
+
+# License
+
+See the repository license for licensing information.
